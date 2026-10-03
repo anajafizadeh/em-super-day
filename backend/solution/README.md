@@ -94,8 +94,8 @@ Run the supplied mock regression tests from the repository root:
 node --test support/*.test.mjs
 ```
 
-The `Backend validation` GitHub Actions workflow runs these checks on both task
-branches and relevant pull requests, using Python 3.14 and Node.js 24.
+Run these checks locally using Python 3.14 and Node.js 24. The optional local
+`.github/workflows/backend.yml` file is excluded from version control.
 
 ## Layout
 

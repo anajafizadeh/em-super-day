@@ -20,8 +20,8 @@ development server was stopped after verification. Unit/HTTP tests additionally
 cover invalid data, zero quantities/totals, precision, updated prices, and errors.
 
 Reproduce the automated checks using the commands in `../README.md` and
-`TASK-02.md`. The GitHub Actions workflow repeats the automated suite with
-Python 3.14 and the repository's requested Node.js 24 runtime.
+`TASK-02.md`, using Python 3.14 and the repository's requested Node.js 24 runtime.
+The optional local workflow file is excluded from version control.
 
 The teammate's actual `get_crm_data` function was not available. Its documented
 Task 1 dictionary and error contract are covered with test substitutes, and the

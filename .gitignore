@@ -33,3 +33,6 @@ CLAUDE.local.md
 AMIR_TASK.md
 AMIR_DECISIONS.md
 AMIR_ASSUMPTIONS.md
+
+# Local workflow configuration
+/.github/workflows/backend.yml
