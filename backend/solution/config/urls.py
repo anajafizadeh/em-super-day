@@ -17,6 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+handler404 = 'utils.not_found'
+handler500 = 'utils.server_error'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('portfolio.urls')),

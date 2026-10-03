@@ -14,3 +14,5 @@ PORTFOLIO_ID_PATTERN = r'^[A-Z0-9_-]{1,64}$'
 
 # Currencies we can serve (Task 7 converts between them).
 SUPPORTED_CURRENCIES = ('CAD', 'USD')
+
+PERFORMANCE_RANGES = ('1D', '1M', 'YTD', '1Y', 'All')

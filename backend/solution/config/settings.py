@@ -49,6 +49,10 @@ ALLOWED_HOSTS = [
 # External mock CRM (Task 1).
 CRM_BASE_URL = _require_env('CRM_BASE_URL')
 
+# Optional Task 1 integration, e.g. portfolio.crm.get_crm_data.
+# Until supplied, Tasks 2/3 resolve portfolio IDs from the provided seed file.
+GET_CRM_DATA_CALLABLE = os.environ.get('GET_CRM_DATA_CALLABLE', '')
+
 
 # Application definition
 
