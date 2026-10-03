@@ -71,6 +71,9 @@ documented Task 1 output; live teammate integration remains to be verified.
 
 ## Validation and tests
 
+See the [Task 2 pytest evaluation report](docs/TASK-02-EVALUATION.md) for the
+verified results, acceptance criteria, limitations, and exact rerun command.
+
 With the virtual environment active and `.env.local` configured, run from
 `backend/solution/`:
 
