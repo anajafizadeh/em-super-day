@@ -69,6 +69,20 @@ from the separate history store: the Task 1 schema contains no holdings or daily
 snapshots. A blank `GET_CRM_DATA_CALLABLE` retains the local portfolio registry in
 `backend/fixtures/seed.json` for independent Task 2/3 demos.
 
+## Currency display (Task 7)
+
+`GET /portfolios/:id` and `GET /portfolios/:id/holdings` accept `?currency=CAD|USD`.
+
+- **Input:** the value is case- and whitespace-insensitive. Missing or blank means native CAD. Anything else returns `400 unsupported_currency`, before any CRM or rate call.
+- **Rates:** live CAD→USD rates come from ExchangeRate-API's pair endpoint.
+  - `EXCHANGE_RATE_API_KEY` is **required** in `.env.local`.
+  - A rate is cached in-process until the provider's next daily update, so there is about one call per day.
+  - If a refresh fails, the last good rate is served. If no rate was ever fetched, the response is `503 fx_unavailable`.
+  - After a failed refresh, the provider isn't called again for 5 minutes.
+- **What converts:** money fields are converted and rounded to cents (ROUND_HALF_UP). Quantities and percentages are not converted. CAD responses are returned unrounded, exactly as before.
+- **Metadata:** every response object carries `currency`, `exchangeRate` (1 for CAD) and `exchangeRateAsOf` (the provider's last update in UTC; null for CAD). Array responses keep their array shape, and each item carries the metadata.
+- **Live test:** the real API test is opt-in, since it uses quota: `pytest -m fx_live`.
+
 ## Validation and tests
 
 English evaluation reports:

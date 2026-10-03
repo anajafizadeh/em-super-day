@@ -20,6 +20,7 @@ OUTPUT_FIELDS = {
     "dayChangeAmount", "dayChangePercent",
 }
 NUMBER_FIELDS = OUTPUT_FIELDS - {"ticker", "name", "assetClass"}
+CURRENCY_FIELDS = {"currency", "exchangeRate", "exchangeRateAsOf"}  # Task 7 metadata
 
 
 def seed_data():
@@ -195,7 +196,7 @@ class HoldingsEndpointTests(SimpleTestCase):
         self.assertAlmostEqual(body[0]["weightPercent"], 27300 / 48930)
         self.assertEqual(body[2]["dayChangePercent"], 0.2)
         for holding in body:
-            self.assertEqual(set(holding), OUTPUT_FIELDS)
+            self.assertEqual(set(holding), OUTPUT_FIELDS | CURRENCY_FIELDS)
             for field in NUMBER_FIELDS:
                 self.assertIn(type(holding[field]), (int, float))
         self.metadata_lookup.assert_called_once_with("P-9001")
