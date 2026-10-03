@@ -49,12 +49,12 @@ sample history file. `PORTFOLIO_HISTORY_PATH` can override the path in Django
 settings for integration or tests. File changes are visible on the next request.
 
 Portfolio existence is resolved through the shared `require_portfolio` adapter.
-Until the teammate's Task 1 integration is available, the local seed portfolio
-registry is the default provider. Set `GET_CRM_DATA_CALLABLE` to the dotted import
-path of `get_crm_data(portfolio_id)` to use Task 1's mapped output; the adapter
-checks its `portfolioId`. Its structured `ApiError` errors propagate, including
-unknown IDs and unavailable CRM data. Task 3 does not implement the CRM fetcher
-or Task 1's endpoint.
+The local seed portfolio registry remains the default provider. The merged
+Task 1 implementation is available as `portfolio.services.get_crm_data`. Set
+`GET_CRM_DATA_CALLABLE=portfolio.services.get_crm_data` to use its mapped output;
+the adapter checks its `portfolioId`. Structured `ApiError` errors propagate,
+including unknown IDs and unavailable CRM data. Task 1 owns the CRM fetcher and
+metadata endpoint; Task 3 owns daily-history filtering.
 
 An unknown portfolio returns a structured HTTP 404. A missing/unreadable history
 file, malformed JSON, absent history entry for a known portfolio, or invalid
@@ -81,7 +81,7 @@ From `backend/solution`, with the required environment variables configured:
 
 ```sh
 python manage.py check
-python manage.py test portfolio.test_performance
+python -m pytest portfolio/test_performance.py -v
 python -m unittest portfolio.test_performance.PerformanceFilteringTests
 ```
 

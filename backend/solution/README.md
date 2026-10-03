@@ -2,11 +2,11 @@
 
 Python 3.14, Django 5.2 LTS.
 
-Task 2 is developed on `EM-XW-002-T02`; Task 3 is developed on
-`EM-XW-004-T03`. Each branch can be run and tested independently. Task-specific
-behavior, examples, and validation details are in this branch's `docs/` folder.
-Neither branch implements Task 1, authentication (Task 4), currency conversion
-(Task 7), or ledger replay (Task 10).
+This checkout combines Task 1 CRM metadata and Task 2 holdings from `main` with
+Task 3 performance history on `EM-XW-004-T03`. All three endpoints can run in one
+Django service. Task-specific behavior, examples, and evaluation reports are in
+`docs/`. Authentication (Task 4), currency conversion (Task 7), and ledger replay
+(Task 10) remain outside these tasks.
 
 ## Setup
 
@@ -51,10 +51,11 @@ history. An absent or malformed data file produces a structured HTTP 503.
 
 ## Task 1 integration
 
-When the teammate's helper is available, set `GET_CRM_DATA_CALLABLE` in
-`.env.local` to its real dotted Python path, for example
-`portfolio.crm.get_crm_data` **if that is where it is implemented**. Restart the
-server after changing configuration.
+The teammate's helper is available as `portfolio.services.get_crm_data`.
+`GET /portfolios/{portfolioId}` calls it directly. To use it for Task 2/3
+portfolio identity checks as well, set
+`GET_CRM_DATA_CALLABLE=portfolio.services.get_crm_data` in `.env.local` and start
+the mock CRM. Restart the Django server after changing configuration.
 
 The synchronous function accepts one portfolio ID and returns the mapped Task 1
 dictionary (`portfolioId`, `clientId`, `label`, `currency`, `totalMarketValue`,
@@ -65,28 +66,36 @@ failures, including unknown portfolio IDs. Task 1 owns CRM timeouts and retries.
 The shared adapter checks the requested portfolio identity. Task 2 still computes
 the weight denominator from the current holdings. Task 3 reads historical values
 from the separate history store: the Task 1 schema contains no holdings or daily
-snapshots. Until the helper exists, a blank `GET_CRM_DATA_CALLABLE` uses the
-portfolio registry in `backend/fixtures/seed.json`. Contract tests substitute the
-documented Task 1 output; live teammate integration remains to be verified.
+snapshots. A blank `GET_CRM_DATA_CALLABLE` retains the local portfolio registry in
+`backend/fixtures/seed.json` for independent Task 2/3 demos.
 
 ## Validation and tests
+
+English evaluation reports:
+
+- [Task 2 evaluation](docs/TASK-02-EVALUATION.md)
+- [Task 3 evaluation](docs/TASK-03-EVALUATION.md)
 
 With the virtual environment active and `.env.local` configured, run from
 `backend/solution/`:
 
 ```sh
+python -m pip install -r requirements-dev.txt
 python manage.py check
 python manage.py makemigrations --check --dry-run
-python manage.py test --verbosity 2
+python -m pytest -v
 python -m pip check
 ```
 
-The suite exercises pure calculations, storage/metadata integration, and Django
-HTTP responses. It uses fixed dates and temporary data files where appropriate;
-it needs neither a running CRM nor generated history. No new database tables or
-migrations are required. Monetary calculations use `Decimal` internally and
-serialize as JSON numbers. All values remain in native CAD, and percentages are
-decimal ratios.
+The suite exercises all three tasks: pure calculations, storage, CRM mapping,
+transport errors, and Django HTTP responses. Task 1 integration tests require a
+running mock CRM at `CRM_BASE_URL` and otherwise skip; use a dedicated mock for
+testing because they change its failure mode. All other tests use test doubles
+or temporary files. Run `python -m pytest -m "not integration" -v` for the offline
+suite. Generated history is not required by the tests. No new database tables or
+migrations are required for these endpoints. Monetary calculations use `Decimal`
+internally and serialize as JSON numbers; values remain in native CAD and
+percentages are decimal ratios.
 
 Run the supplied mock regression tests from the repository root:
 

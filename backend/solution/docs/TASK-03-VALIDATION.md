@@ -1,5 +1,9 @@
 # Task 3 validation record
 
+This is the original standalone validation record before Task 1 was integrated.
+For the subsequent conflict resolution, combined pytest results, and verified
+Task 1 adapter, see the [Task 3 evaluation report](TASK-03-EVALUATION.md).
+
 Validated locally on October 3, 2026 using Python 3.14.8 and Django 5.2.17.
 
 | Check | Result |
