@@ -7,7 +7,7 @@ import re
 from datetime import datetime, timezone
 from decimal import Decimal
 
-from constants import PORTFOLIO_ID_PATTERN, SUPPORTED_CURRENCIES
+from constants import NATIVE_CURRENCY, PORTFOLIO_ID_PATTERN
 from utils import ApiError
 
 # Monetary fields of the normalized portfolio; Task 7 converts exactly these.
@@ -107,8 +107,8 @@ def normalize_crm_portfolio(payload, portfolio_id):
 
     client_id = _required_str(client_record.get('client_id'), 'client_id')
     currency = _required_str(_get(account, 'curr_val', 'ccy'), 'curr_val.ccy').upper()
-    if currency not in SUPPORTED_CURRENCIES:
-        raise _bad_response(f'CRM currency {currency} is not supported.')
+    if currency != NATIVE_CURRENCY:
+        raise _bad_response(f'CRM currency {currency} is not the native currency {NATIVE_CURRENCY}.')
 
     return {
         'portfolioId': portfolio_id,

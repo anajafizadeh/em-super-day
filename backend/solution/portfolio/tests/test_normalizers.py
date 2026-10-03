@@ -163,9 +163,10 @@ def test_missing_required_fields_are_bad_response(mutate):
     _assert_api_error(exc_info, 400, 'crm_bad_response')
 
 
-def test_unsupported_currency_is_bad_response():
+@pytest.mark.parametrize('ccy', ['EUR', 'USD'])
+def test_non_native_currency_is_bad_response(ccy):
     payload = _payload()
-    _account(payload)['curr_val']['ccy'] = 'EUR'
+    _account(payload)['curr_val']['ccy'] = ccy
     with pytest.raises(ApiError) as exc_info:
         normalize_crm_portfolio(payload, 'P-9001')
     _assert_api_error(exc_info, 400, 'crm_bad_response')
