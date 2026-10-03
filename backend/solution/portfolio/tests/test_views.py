@@ -54,5 +54,8 @@ def test_invalid_id_is_400_without_calling_crm(client):
     mock_get.assert_not_called()
 
 
-def test_non_get_is_rejected(client):
-    assert client.post('/portfolios/P-9001').status_code == 405
+def test_non_get_is_json_405(client):
+    response = client.post('/portfolios/P-9001')
+    assert response.status_code == 405
+    assert response.json()['error'] == 'method_not_allowed'
+    assert response['Allow'] == 'GET, HEAD'
