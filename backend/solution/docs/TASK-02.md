@@ -6,7 +6,7 @@ with `{ "error": "method_not_allowed", "message": "..." }`.
 
 ## Design and data
 
-- `portfolio/holdings_views.py` is the thin HTTP adapter.
+- `portfolio/views.py:holdings` is the thin HTTP adapter.
 - `portfolio/holdings_service.py:get_holdings` checks portfolio existence through
   the shared metadata adapter, reads the seed file, selects the requested
   portfolio's records, and invokes the calculation function.

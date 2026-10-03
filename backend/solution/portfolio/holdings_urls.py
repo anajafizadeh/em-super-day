@@ -2,7 +2,7 @@
 
 from django.urls import path
 
-from portfolio.holdings_views import holdings
+from portfolio.views import holdings
 
 
 urlpatterns = [

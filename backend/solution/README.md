@@ -104,5 +104,6 @@ Run these checks locally using Python 3.14 and Node.js 24. The optional local
 - `constants.py`: shared non-secret constants from the spec
 - `utils.py`: shared API errors, Decimal JSON encoding, and JSON error handlers
 - `portfolio/data.py`: fixture loading and the configurable Task 1 adapter
+- `portfolio/views.py`: thin HTTP adapters that call task services
 - `portfolio/holdings*` or `portfolio/performance*`: task calculations, service,
-  view, and URL modules, depending on the branch
+  and URL modules, depending on the branch
