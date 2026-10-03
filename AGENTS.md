@@ -12,9 +12,9 @@
 
 | | |
 |---|---|
-| Language / framework | **TBD** |
-| Install | **TBD** [Once we tell you the stack, fill in this one youself] |
-| Run app | **TBD** [Once we tell you the stack, fill in this one youself] |
+| Language / framework | Python 3.14 / Django 5.2 LTS (plain, no DRF). Project in `backend/solution/` |
+| Install | `cd backend/solution && python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt && cp .env.example .env.local` |
+| Run app | `cd backend/solution && python manage.py runserver 3000` (mock CRM: `node backend/mock-crm.mjs`) |
 | Run tests | **TBD** (e.g. `pytest`) |
 | Storage | **TBD**. |
 
