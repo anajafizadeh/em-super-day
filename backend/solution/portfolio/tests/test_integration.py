@@ -91,3 +91,22 @@ def test_timeout_mode_gives_up_well_before_10s(crm_mode):
     elapsed = time.monotonic() - started
     assert (exc_info.value.status, exc_info.value.error) == (504, 'crm_timeout')
     assert elapsed < 6
+
+
+def test_usd_end_to_end_with_real_crm(client, crm_mode):
+    from datetime import datetime, timezone
+    from decimal import Decimal
+    from unittest.mock import patch
+
+    crm_mode('ok')
+    rate = {'rate': Decimal('0.7020'), 'as_of': '2026-10-03T00:00:02.000Z',
+            'next_update': datetime(2099, 1, 1, tzinfo=timezone.utc)}
+    with patch('portfolio.fx_service.fetch_pair_rate', return_value=rate):
+        response = client.get('/portfolios/p-9001?currency=usd')
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body['portfolioId'] == 'P-9001'
+    assert body['currency'] == 'USD'
+    assert body['totalMarketValue'] == 34348.86  # 48930 CAD x 0.7020
+    assert body['exchangeRate'] == 0.702

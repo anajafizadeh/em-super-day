@@ -19,7 +19,7 @@ NORMALIZED = {
 
 
 def test_success_returns_schema_with_json_numbers(client):
-    with patch('portfolio.views.get_crm_data', return_value=NORMALIZED) as get_crm_data:
+    with patch('portfolio.services.get_crm_data', return_value=NORMALIZED) as get_crm_data:
         response = client.get('/portfolios/p-9001')
 
     assert response.status_code == 200
@@ -38,7 +38,7 @@ def test_success_returns_schema_with_json_numbers(client):
     ApiError(504, 'crm_timeout', 'CRM did not respond in time.'),
 ])
 def test_api_errors_map_to_status_and_body(client, err):
-    with patch('portfolio.views.get_crm_data', side_effect=err):
+    with patch('portfolio.services.get_crm_data', side_effect=err):
         response = client.get('/portfolios/P-9001')
 
     assert response.status_code == err.status

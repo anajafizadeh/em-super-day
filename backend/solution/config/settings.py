@@ -53,6 +53,9 @@ CRM_BASE_URL = _require_env('CRM_BASE_URL')
 # Until supplied, Tasks 2/3 resolve portfolio IDs from the provided seed file.
 GET_CRM_DATA_CALLABLE = os.environ.get('GET_CRM_DATA_CALLABLE', '')
 
+# ExchangeRate-API key for live CAD->USD rates (Task 7).
+EXCHANGE_RATE_API_KEY = _require_env('EXCHANGE_RATE_API_KEY')
+
 
 # Application definition
 
