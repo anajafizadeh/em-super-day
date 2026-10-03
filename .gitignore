@@ -1,0 +1,35 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Django
+db.sqlite3
+db.sqlite3-journal
+*.log
+
+# Env / secrets (.env.example is committed)
+.env
+.env.local
+.env.*.local
+
+# Node
+node_modules/
+
+# Generated fixtures
+backend/fixtures/performance-history.json
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
+
+# Private local files
+CLAUDE.local.md
+AMIR_TASK.md
+AMIR_DECISIONS.md
+AMIR_ASSUMPTIONS.md

@@ -1,0 +1,40 @@
+{
+  "clients": [
+    { "clientId": "abc123", "name": "Jane Doe" },
+    { "clientId": "single-client", "name": "Alex Chen" }
+  ],
+  "portfolios": [
+    { "portfolioId": "P-9001", "clientId": "abc123", "label": "Taxable Brokerage", "currency": "CAD" },
+    { "portfolioId": "P-9002", "clientId": "abc123", "label": "Retirement Account", "currency": "CAD" },
+    { "portfolioId": "P-EMPTY", "clientId": "abc123", "label": "Empty Account", "currency": "CAD" },
+    { "portfolioId": "P-SINGLE", "clientId": "single-client", "label": "Single Asset Class", "currency": "CAD" }
+  ],
+  "holdings": [
+    { "holdingId": "h1", "portfolioId": "P-9001", "ticker": "AAPL", "name": "Apple Inc.", "assetClass": "Equity", "quantity": 120, "costBasisPerShare": 200, "price": 227.5, "previousClosePrice": 225 },
+    { "holdingId": "h2", "portfolioId": "P-9001", "ticker": "BND", "name": "Vanguard Total Bond ETF", "assetClass": "Fixed Income", "quantity": 300, "costBasisPerShare": 74, "price": 72.1, "previousClosePrice": 73 },
+    { "holdingId": "h3", "portfolioId": "P-9001", "ticker": "ZERO", "name": "Closed Position", "assetClass": "Equity", "quantity": 0, "costBasisPerShare": 10, "price": 12, "previousClosePrice": 10 },
+    { "holdingId": "h4", "portfolioId": "P-9002", "ticker": "NEW", "name": "New Security", "assetClass": "Equity", "quantity": 10, "costBasisPerShare": 40, "price": 50, "previousClosePrice": 0 },
+    { "holdingId": "h5", "portfolioId": "P-SINGLE", "ticker": "AAPL", "name": "Apple Inc.", "assetClass": "Equity", "quantity": 10, "costBasisPerShare": 200, "price": 227.5, "previousClosePrice": 225 }
+  ],
+  "holdingDetails": [
+    { "ticker": "AAPL", "name": "Apple Inc.", "sector": "Technology", "assetClass": "Equity", "purchaseDate": "2025-01-02", "dividendYield": 0.005, "fiftyTwoWeekLow": 164.1, "fiftyTwoWeekHigh": 232.4, "priceHistory": [{ "date": "2025-01-02", "price": 200 }, { "date": "2025-02-01", "price": 227.5 }] },
+    { "ticker": "BND", "name": "Vanguard Total Bond ETF", "sector": "Bonds", "assetClass": "Fixed Income", "purchaseDate": "2025-01-02", "dividendYield": 0.03, "fiftyTwoWeekLow": 68, "fiftyTwoWeekHigh": 76, "priceHistory": [{ "date": "2025-01-02", "price": 74 }, { "date": "2025-02-01", "price": 72.1 }] },
+    { "ticker": "ZERO", "name": "Closed Position", "sector": "Other", "assetClass": "Equity", "purchaseDate": "2025-01-02", "dividendYield": null, "fiftyTwoWeekLow": 8, "fiftyTwoWeekHigh": 12, "priceHistory": [] },
+    { "ticker": "NEW", "name": "New Security", "sector": "Other", "assetClass": "Equity", "purchaseDate": "2025-02-01", "dividendYield": null, "fiftyTwoWeekLow": 40, "fiftyTwoWeekHigh": 50, "priceHistory": [] }
+  ],
+  "CADtoUSD": 0.73,
+  "transactions": [
+    { "transactionId": "t1", "holdingId": "h1", "type": "BUY", "quantity": 100, "price": 190, "date": "2025-01-02" },
+    { "transactionId": "t2", "holdingId": "h1", "type": "BUY", "quantity": 50, "price": 220, "date": "2025-01-03" },
+    { "transactionId": "t3", "holdingId": "h1", "type": "SELL", "quantity": 30, "price": 230, "date": "2025-02-01" },
+    { "transactionId": "t4", "holdingId": "h2", "type": "BUY", "quantity": 300, "price": 74, "date": "2025-01-02" },
+    { "transactionId": "t5", "holdingId": "h3", "type": "BUY", "quantity": 5, "price": 10, "date": "2025-01-02" },
+    { "transactionId": "t6", "holdingId": "h3", "type": "SELL", "quantity": 5, "price": 12, "date": "2025-01-03" },
+    { "transactionId": "t7", "holdingId": "h4", "type": "BUY", "quantity": 10, "price": 40, "date": "2025-02-01" },
+    { "transactionId": "t8", "holdingId": "h5", "type": "BUY", "quantity": 10, "price": 200, "date": "2025-01-02" }
+  ],
+  "ledgerCases": {
+    "oversell": [{ "type": "BUY", "quantity": 5, "price": 10, "date": "2025-01-01" }, { "type": "SELL", "quantity": 6, "price": 12, "date": "2025-01-02" }],
+    "outOfOrder": [{ "type": "SELL", "quantity": 2, "price": 12, "date": "2025-01-03" }, { "type": "BUY", "quantity": 5, "price": 10, "date": "2025-01-01" }]
+  }
+}

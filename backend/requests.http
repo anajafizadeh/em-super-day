@@ -1,0 +1,60 @@
+# Optional: use an HTTP client that supports .http files, or copy each request
+# into your preferred client. Set your backend URL and chosen token here.
+@backend = http://localhost:3000
+@crm = http://localhost:4002
+@token = superday-demo-token
+
+### CRM: normal response, bypass random-looking failures
+GET {{crm}}/crm/portfolios/P-9001?mode=ok
+
+### CRM: set global mode to ok (change to error, timeout, or auto as needed)
+POST {{crm}}/__control
+Content-Type: application/json
+
+{ "mode": "ok" }
+
+### CRM: inspect calls while testing your backend cache
+GET {{crm}}/__stats
+
+### Your backend: must reject missing auth
+GET {{backend}}/portfolios/P-9001
+
+### Your backend: mapped metadata
+GET {{backend}}/portfolios/P-9001
+Authorization: Bearer {{token}}
+
+### Your backend: holdings in USD
+GET {{backend}}/portfolios/P-9001/holdings?currency=USD
+Authorization: Bearer {{token}}
+
+### Your backend: current-year history
+GET {{backend}}/portfolios/P-9001/performance-history?range=YTD
+Authorization: Bearer {{token}}
+
+### Your backend: invalid range
+GET {{backend}}/portfolios/P-9001/performance-history?range=invalid
+Authorization: Bearer {{token}}
+
+### Your backend: allocation
+GET {{backend}}/portfolios/P-9001/allocation
+Authorization: Bearer {{token}}
+
+### Your backend: account list
+GET {{backend}}/clients/abc123/portfolios
+Authorization: Bearer {{token}}
+
+### Your backend: household totals
+GET {{backend}}/clients/abc123/household-summary
+Authorization: Bearer {{token}}
+
+### Your backend: missing optional detail fields
+GET {{backend}}/holdings/NEW/detail
+Authorization: Bearer {{token}}
+
+### Your backend: empty account
+GET {{backend}}/portfolios/P-EMPTY/holdings
+Authorization: Bearer {{token}}
+
+### Your backend: unknown account
+GET {{backend}}/portfolios/UNKNOWN
+Authorization: Bearer {{token}}

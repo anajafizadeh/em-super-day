@@ -1,0 +1,12 @@
+{
+  "name": "electric-mind-superday",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=24" },
+  "scripts": {
+    "frontend": "node frontend/mock-server.mjs",
+    "backend": "node backend/mock-crm.mjs",
+    "mobile": "node mobile/mock-server.mjs",
+    "test": "node --test support/*.test.mjs"
+  }
+}
