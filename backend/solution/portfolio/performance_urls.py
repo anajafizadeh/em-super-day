@@ -2,7 +2,7 @@
 
 from django.urls import path
 
-from portfolio.performance_views import performance_history
+from portfolio.views import performance_history
 
 urlpatterns = [
     path(

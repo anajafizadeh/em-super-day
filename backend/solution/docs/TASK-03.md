@@ -73,7 +73,7 @@ from the response. No currency conversion is performed (Task 7 is separate).
   imports no Django, HTTP, or storage modules and never mutates the input.
 - `portfolio/performance_service.py`: one main orchestration function, with a
   per-request UTC date helper.
-- `portfolio/performance_views.py`: query parsing and JSON response only.
+- `portfolio/views.py`: query parsing and JSON response only.
 - `portfolio/performance_urls.py`: the task's route, included by the app URLconf.
 - `portfolio/test_performance.py`: deterministic pure-unit and Django HTTP tests.
 
