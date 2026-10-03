@@ -6,6 +6,7 @@ import math
 
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 
 class ApiError(Exception):
@@ -31,13 +32,18 @@ class DecimalJSONEncoder(DjangoJSONEncoder):
 
 
 def json_response(data, *, status=200):
-    return JsonResponse(
-        data,
-        safe=not isinstance(data, list),
-        status=status,
-        encoder=DecimalJSONEncoder,
-        json_dumps_params={'allow_nan': False},
-    )
+    try:
+        return JsonResponse(
+            data,
+            safe=not isinstance(data, list),
+            status=status,
+            encoder=DecimalJSONEncoder,
+            json_dumps_params={'allow_nan': False},
+        )
+    except (ValueError, OverflowError) as error:
+        raise ApiError(
+            503, 'data_unavailable', 'Portfolio data cannot be represented as JSON numbers.'
+        ) from error
 
 
 def error_response(error):
@@ -60,7 +66,9 @@ def api_get(view):
             return view(request, *args, **kwargs)
         except ApiError as error:
             return error_response(error)
-    return wrapped
+    # The wrapper rejects every unsafe method before the view can run.
+    # Exemption permits a consistent JSON 405 instead of an earlier HTML 403.
+    return csrf_exempt(wrapped)
 
 
 def not_found(request, exception):

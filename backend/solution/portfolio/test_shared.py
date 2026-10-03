@@ -25,8 +25,10 @@ class SharedResponseTests(SimpleTestCase):
 
     def test_nonfinite_output_is_rejected(self):
         for value in (Decimal('NaN'), Decimal('Infinity'), Decimal('1e10000')):
-            with self.subTest(value=value), self.assertRaises(ValueError):
-                json_response([value])
+            with self.subTest(value=value):
+                with self.assertRaises(ApiError) as raised:
+                    json_response([value])
+                self.assertEqual(raised.exception.status, 503)
 
     @override_settings(DEBUG=False)
     def test_unknown_route_has_a_json_error(self):
