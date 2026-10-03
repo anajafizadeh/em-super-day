@@ -30,7 +30,6 @@ backend/fixtures/performance-history.json
 
 # Private local files
 CLAUDE.local.md
-AMIR_TASK.md
 AMIR_DECISIONS.md
 AMIR_ASSUMPTIONS.md
 
